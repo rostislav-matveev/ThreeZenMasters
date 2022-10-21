@@ -1,0 +1,120 @@
+% All in all
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% LAYOUT
+\setlength{\topmargin}{-10 mm}
+\setlength{\textheight}{230mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\oddsidemargin}{\evensidemargin}
+\setlength{\textwidth}{160mm} 
+
+
+\setlength{\headheight}{12pt}
+\renewcommand{\headrulewidth}{1.5 pt}
+\fancypagestyle{plain}{%
+   \fancyhead{} %
+   \fancyfoot[C]{\textit{\textbf{\Large\thepage}}} % 
+   \renewcommand{\headrulewidth}{0pt}%
+   \renewcommand{\footrulewidth}{0pt}
+}
+
+
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RE,LO]{\textbf{\thesection. }}
+\fancyhead[LE,RO]{Драфт: \today\hspace{10mm}\textit{\textbf{\Large\thepage}}}
+% LAYOUT
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+% Editting
+
+\newcommand{\skipthis}[2][]{\relax}
+\let\comment=\skipthis
+
+\long\def\skippar#1\par{\relax\par}
+
+\def\comm#1{\textcolor{red}{\sf(#1)}}
+\def\str#1{\marginpar{\rotatebox{-90}{\fbox{Страница~#1}}}\nopagebreak}
+\def\orig#1{\textcolor{purple}{\tt(=#1)}}
+\newcommand{\nat}[1]{\textcolor{blue}{#1}}
+\newcounter{mis}\setcounter{mis}{-1}
+\newcommand{\pt}{
+  \par\noindent%
+  \addtocounter{mis}{1}
+  {{\color{green}%
+   \parbox{0mm}{\rule{\textwidth}{2.5 ex}}%
+   }%
+   {\bf \arabic{mis}}\par
+  }%
+  \par}
+
+\def\sep{{\color{red}\hrule\par\ \par}}
+
+
+
+\definecolor{c0}{RGB}{200,0,0}
+\definecolor{c1}{RGB}{200,0,150}
+\definecolor{c2}{RGB}{150,0,200}
+\definecolor{c3}{RGB}{80,0,200}
+\definecolor{c4}{RGB}{0,0,255}
+
+\newenvironment{ver}[1][0]{%
+  \ifx#10
+    \def\FrameCommand{\hspace{-10pt}{\color{red}%
+                      \vrule width 5pt} \hspace{6pt}}%
+    \MakeFramed {\advance\hsize-\width \FrameRestore}%
+  \else\ifx#11
+    \def\FrameCommand{\hspace{-10pt}{\color{c1}%
+                      \vrule width 4pt} \hspace{7pt}}%  
+    \MakeFramed {\advance\hsize-\width \FrameRestore}%
+  \else\ifx#12
+    \def\FrameCommand{\hspace{-10pt}{\color{c2}%
+                      \vrule width 3pt} \hspace{8pt}}%  
+    \MakeFramed {\advance\hsize-\width \FrameRestore}%
+  \else\ifx#13
+    \def\FrameCommand{\hspace{-10pt}{\color{c3}%
+                      \vrule width 2pt} \hspace{8pt}}%  
+    \MakeFramed {\advance\hsize-\width \FrameRestore}%
+  \else\ifx#14
+    \def\FrameCommand{\hspace{-10pt}{\color{c4}%
+                      \vrule width 1pt} \hspace{8pt}}%  
+    \MakeFramed {\advance\hsize-\width \FrameRestore}%
+  \else
+    \def\FrameCommand{\relax}%  
+    \MakeFramed {\advance\hsize-\width \FrameRestore}
+  \fi\fi\fi\fi\fi
+ }%
+ {\endMakeFramed}
+
+\newcommand{\inp}[1]{%
+  \pagebreak[3]%
+  \marginpar{%
+    \raggedright%
+    \rule{0mm}{4mm}\\%
+    \rotatebox{-90}{\texttt{Файл #1}}}%
+    \nopagebreak%
+    \input{#1}}
+% Editting
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\next{\\\ \\}
+
+
+\newenvironment{verses}{%
+        \begin{verse}%
+        \let\savedpar=\par%
+        \def\\{\ifhmode \unskip \else \@nolnerr \fi%
+               \savedpar \@ifstar {\nobreak \@xcentercr }\@xcentercr}%
+        \def\par{\savedpar\vspace{3ex}\savedpar }%
+        \it%
+        }
+        {%
+        \let\par=\savedpar
+        \end{verse}}
+\makeatother
